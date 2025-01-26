@@ -47,6 +47,25 @@ double coracao2[25] = {
     0.0, 0.0, 0.3, 0.0, 0.0
 };
 
+double estrela1[25] = {
+    0.0, 0.0, 0.6, 0.0, 0.0, // Topo da estrela
+    0.6, 0.0, 0.0, 0.0, 0.6, // Braços laterais superiores
+    0.0, 0.6, 0.0, 0.6, 0.0, // Centro vazio
+    0.6, 0.0, 0.0, 0.0, 0.6, // Braços laterais inferiores
+    0.0, 0.0, 0.6, 0.0, 0.0  // Base da estrela
+};
+
+
+double estrela2[25] = {
+    0.0, 0.0, 1.0, 0.0, 0.0, // Topo cheio
+    1.0, 1.0, 1.0, 1.0, 1.0, // Braços laterais superiores preenchidos
+    0.0, 1.0, 1.0, 1.0, 0.0, // Centro totalmente preenchido
+    1.0, 1.0, 1.0, 1.0, 1.0, // Braços laterais inferiores preenchidos
+    0.0, 1.0, 0.0, 1.0, 0.0  // Base preenchida
+};
+
+
+
 // Função para configurar o valor RGB
 uint32_t matrix_rgb(double b, double r, double g) {
     unsigned char R, G, B;
@@ -90,6 +109,16 @@ void animar_coracao(PIO pio, uint sm) {
     }
 }
 
+void animar_estrela(PIO pio, uint sm) {
+    for (int i = 0; i < 3; i++) { // Repetir animação 3 vezes
+        desenho_pio(estrela1, pio, sm, 0.5, 0.5, 0.0); // Amarelo brilhante
+        sleep_ms(1000);
+        desenho_pio(estrela2, pio, sm, 0.5, 0.5, 0.0); // Amarelo mais fraco
+        sleep_ms(1000);
+    }
+}
+
+
 int main() {
     // Inicializa comunicação serial
     stdio_init_all();
@@ -119,6 +148,8 @@ int main() {
             printf("Tecla pressionada: %c\n", tecla);
 
             switch (tecla) {
+                case '0':
+                    animar_estrela(pio,sm);
                 case '1':
                     animar_coracao(pio, sm);
                     break;
