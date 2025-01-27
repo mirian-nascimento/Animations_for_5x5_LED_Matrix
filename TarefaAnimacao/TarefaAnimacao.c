@@ -55,7 +55,6 @@ double estrela1[25] = {
     0.0, 0.0, 0.6, 0.0, 0.0  // Base da estrela
 };
 
-
 double estrela2[25] = {
     0.0, 0.0, 1.0, 0.0, 0.0, // Topo cheio
     1.0, 1.0, 1.0, 1.0, 1.0, // Braços laterais superiores preenchidos
@@ -64,7 +63,38 @@ double estrela2[25] = {
     0.0, 1.0, 0.0, 1.0, 0.0  // Base preenchida
 };
 
+// Frames para animação de onda
+double onda[5][25] = {
+    {0.0, 0.0, 0.5, 0.0, 0.0,
+     0.0, 0.5, 0.5, 0.5, 0.0,
+     0.5, 0.5, 1.0, 0.5, 0.5,
+     0.0, 0.5, 0.5, 0.5, 0.0,
+     0.0, 0.0, 0.5, 0.0, 0.0},
 
+    {0.0, 0.5, 0.8, 0.5, 0.0,
+     0.5, 0.8, 1.0, 0.8, 0.5,
+     0.8, 1.0, 1.0, 1.0, 0.8,
+     0.5, 0.8, 1.0, 0.8, 0.5,
+     0.0, 0.5, 0.8, 0.5, 0.0},
+
+    {0.5, 0.8, 1.0, 0.8, 0.5,
+     0.8, 1.0, 1.0, 1.0, 0.8,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     0.8, 1.0, 1.0, 1.0, 0.8,
+     0.5, 0.8, 1.0, 0.8, 0.5},
+
+    {0.0, 0.5, 0.8, 0.5, 0.0,
+     0.5, 0.8, 1.0, 0.8, 0.5,
+     0.8, 1.0, 1.0, 1.0, 0.8,
+     0.5, 0.8, 1.0, 0.8, 0.5,
+     0.0, 0.5, 0.8, 0.5, 0.0},
+
+    {0.0, 0.0, 0.5, 0.0, 0.0,
+     0.0, 0.5, 0.5, 0.5, 0.0,
+     0.5, 0.5, 1.0, 0.5, 0.5,
+     0.0, 0.5, 0.5, 0.5, 0.0,
+     0.0, 0.0, 0.5, 0.0, 0.0}
+};
 
 // Função para configurar o valor RGB
 uint32_t matrix_rgb(double b, double r, double g) {
@@ -109,6 +139,7 @@ void animar_coracao(PIO pio, uint sm) {
     }
 }
 
+// Função para animar a estrela piscando
 void animar_estrela(PIO pio, uint sm) {
     for (int i = 0; i < 3; i++) { // Repetir animação 3 vezes
         desenho_pio(estrela1, pio, sm, 0.5, 0.5, 0.0); // Amarelo brilhante
@@ -118,6 +149,13 @@ void animar_estrela(PIO pio, uint sm) {
     }
 }
 
+// Função para animar onda
+void animar_onda(PIO pio, uint sm) {
+    for (int i = 0; i < 5; i++) { // Repetir animação 5 vezes
+        desenho_pio(onda[i], pio, sm, 0.0, 0.0, 1.0); // Azul
+        sleep_ms(500);
+    }
+}
 
 int main() {
     // Inicializa comunicação serial
@@ -149,9 +187,13 @@ int main() {
 
             switch (tecla) {
                 case '0':
-                    animar_estrela(pio,sm);
+                    animar_estrela(pio, sm);
+                    break;
                 case '1':
                     animar_coracao(pio, sm);
+                    break;
+                case '2':
+                    animar_onda(pio, sm); // Adicionada animação de onda
                     break;
                 case '3':
                     // Animação já implementada no código original
