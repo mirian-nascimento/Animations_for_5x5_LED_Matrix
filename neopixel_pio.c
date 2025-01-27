@@ -8,7 +8,7 @@
 
 // Definição do número de LEDs e pino.
 #define LED_COUNT 25
-#define LED_PIN 7
+#define LED_PIN 10
 const uint8_t colunas[4] = {1, 2, 3, 4}; // Pinos das colunas do teclado matricial
 const uint8_t linhas[4] = {5, 6, 7, 8};  // Pinos das linhas do teclado matricial
 const char teclado[4][4] = 
@@ -115,7 +115,7 @@ int main() {
   while (true) {
     char tecla = leitura_teclado();
 
-    switch (tecla != 'n')
+    switch (tecla)
     {
       case '0':
         AnimationFlor();
